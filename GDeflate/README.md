@@ -1,14 +1,61 @@
 
-# Sample Code
+# GDeflate Compression Library
+
 GDeflate is a new compression stream format that closely matches the DEFLATE format. The key difference lies in the way the bits in the compressed bitstream are stored. The GDeflate stream is essentially a reformatted version of any DEFLATE stream where the data is ordered in a particular way to efficiently extract 32 way parallelism without increasing the size of the input stream. This means that GDeflate can get very high decompression throughput on the GPU while still maintaining the exact same compression ratio of DEFLATE (with some small caveats about end effects).
 
 Details on the bitstream can be found in [GDeflate Reference Implementation](GDeflate/README.md)
+
+## Using GDeflate as a Library
+
+GDeflate can be integrated into your applications as a library for high-performance compression. See:
+
+- **[LIBRARY_USAGE.md](LIBRARY_USAGE.md)** - Complete integration guide for C, C++, and Rust projects
+- **[SEARCH_TOOL_INTEGRATION.md](SEARCH_TOOL_INTEGRATION.md)** - Guide for integrating with search tools like ripgrep
+- **[rust/README.md](rust/README.md)** - Rust-specific documentation and examples
+
+### Quick Start - Rust
+
+```toml
+[dependencies]
+gdeflate = { path = "path/to/DirectStorage/GDeflate/rust" }
+```
+
+```rust
+use gdeflate::{compress, decompress};
+
+let input = b"Hello, world!";
+let compressed = compress(input, 6, 0)?;
+let decompressed = decompress(&compressed, input.len(), 0)?;
+```
+
+### Quick Start - C/C++
+
+```c
+#include <gdeflate/GDeflate_c.h>
+
+// Compress data
+uint8_t* output = malloc(gdeflate_compress_bound(input_size));
+size_t output_size = max_size;
+gdeflate_compress(output, &output_size, input, input_size, 6, 0);
+
+// Decompress data
+gdeflate_decompress(decompressed, uncompressed_size, compressed, compressed_size, 0);
+```
+
+## Repository Structure
 
 ## 3rdParty\libdeflate
 Builds a static library using an updated libdeflate implementation that supports GDeflate.
 
 ## GDeflate
-Builds a static library for a GDeflate CPU compressor/decompressor.
+Builds a static and shared library for GDeflate CPU compressor/decompressor. Now includes:
+- C++ API (GDeflate.h)
+- C API wrapper (GDeflate_c.h)
+- CMake package configuration
+- pkg-config support
+
+## Rust Bindings
+Complete Rust FFI bindings with safe API, comprehensive tests, and examples.
 
 ## Shaders
 HLSL source to the GDeflate GPU decompressor
