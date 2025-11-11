@@ -21,7 +21,6 @@
 //! ```
 
 use std::os::raw::{c_uint, c_int};
-use std::slice;
 
 /// Minimum compression level
 pub const MIN_COMPRESSION_LEVEL: u32 = 1;
@@ -283,8 +282,11 @@ mod tests {
 
     #[test]
     fn test_compression_levels() {
-        let input = b"The quick brown fox jumps over the lazy dog. ".repeat(10);
-        let input_bytes: Vec<u8> = input.into_iter().flat_map(|&b| b).collect();
+        let input_text = "The quick brown fox jumps over the lazy dog. ";
+        let mut input_bytes = Vec::new();
+        for _ in 0..10 {
+            input_bytes.extend_from_slice(input_text.as_bytes());
+        }
         
         for level in MIN_COMPRESSION_LEVEL..=MAX_COMPRESSION_LEVEL {
             let compressed = compress(&input_bytes, level, 0)

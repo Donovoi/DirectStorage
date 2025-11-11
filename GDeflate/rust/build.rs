@@ -11,22 +11,26 @@ fn main() {
         .join("libdeflate");
 
     // Build libdeflate
+    let libdeflate_files = [
+        "lib/adler32.c",
+        "lib/crc32.c",
+        "lib/deflate_compress.c",
+        "lib/deflate_decompress.c",
+        "lib/gdeflate_compress.c",
+        "lib/gdeflate_decompress.c",
+        "lib/gzip_compress.c",
+        "lib/gzip_decompress.c",
+        "lib/utils.c",
+        "lib/zlib_compress.c",
+        "lib/zlib_decompress.c",
+        "lib/x86/cpu_features.c",
+    ];
+    
     let mut libdeflate_build = cc::Build::new();
+    for file in &libdeflate_files {
+        libdeflate_build.file(libdeflate_src.join(file));
+    }
     libdeflate_build
-        .files(&[
-            "lib/adler32.c",
-            "lib/crc32.c",
-            "lib/deflate_compress.c",
-            "lib/deflate_decompress.c",
-            "lib/gdeflate_compress.c",
-            "lib/gdeflate_decompress.c",
-            "lib/gzip_compress.c",
-            "lib/gzip_decompress.c",
-            "lib/utils.c",
-            "lib/zlib_compress.c",
-            "lib/zlib_decompress.c",
-            "lib/x86/cpu_features.c",
-        ].iter().map(|f| libdeflate_src.join(f)))
         .include(&libdeflate_src)
         .warnings(false);
 
@@ -38,15 +42,19 @@ fn main() {
     libdeflate_build.compile("deflate");
 
     // Build GDeflate
+    let gdeflate_files = [
+        "GDeflateCompress.cpp",
+        "GDeflateDecompress.cpp",
+        "GDeflate_c.cpp",
+    ];
+    
     let mut gdeflate_build = cc::Build::new();
+    for file in &gdeflate_files {
+        gdeflate_build.file(gdeflate_src.join(file));
+    }
     gdeflate_build
         .cpp(true)
         .std("c++17")
-        .files(&[
-            "GDeflateCompress.cpp",
-            "GDeflateDecompress.cpp",
-            "GDeflate_c.cpp",
-        ].iter().map(|f| gdeflate_src.join(f)))
         .include(&gdeflate_src)
         .include(&libdeflate_src)
         .warnings(false);
