@@ -30,7 +30,9 @@ For Rust-based tools like ripgrep, use the Rust FFI bindings:
 ```rust
 // Add to Cargo.toml
 [dependencies]
-gdeflate = { path = "path/to/DirectStorage/GDeflate/rust" }
+gdeflate = { path = "../path/to/DirectStorage/GDeflate/rust" }
+# Or use git dependency:
+# gdeflate = { git = "https://github.com/Donovoi/DirectStorage", subdir = "GDeflate/rust" }
 
 // Use in code
 use gdeflate::{compress, decompress};

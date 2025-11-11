@@ -129,7 +129,8 @@ test result: ok. 5 passed; 0 failed; 0 ignored
 ```rust
 // Add to Cargo.toml
 [dependencies]
-gdeflate = { path = "path/to/DirectStorage/GDeflate/rust" }
+gdeflate = { path = "../path/to/DirectStorage/GDeflate/rust" }
+# Or: gdeflate = { git = "https://github.com/Donovoi/DirectStorage", subdir = "GDeflate/rust" }
 
 // Use in code
 use gdeflate::{compress, decompress};

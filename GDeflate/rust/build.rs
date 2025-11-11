@@ -10,6 +10,15 @@ fn main() {
         .join("3rdparty")
         .join("libdeflate");
 
+    // Check if libdeflate submodule is initialized
+    if !libdeflate_src.join("lib").exists() {
+        panic!(
+            "libdeflate submodule not initialized!\n\
+             Please run: git submodule update --init --recursive\n\
+             from the repository root directory."
+        );
+    }
+
     // Build libdeflate
     let libdeflate_files = [
         "lib/adler32.c",

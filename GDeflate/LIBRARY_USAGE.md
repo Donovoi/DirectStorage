@@ -168,7 +168,9 @@ To add GDeflate decompression support to ripgrep or similar search tools:
 
 ```toml
 [dependencies]
-gdeflate = { path = "path/to/GDeflate/rust" }
+gdeflate = { path = "../path/to/DirectStorage/GDeflate/rust" }
+# Or use git dependency once published:
+# gdeflate = { git = "https://github.com/Donovoi/DirectStorage", subdir = "GDeflate/rust" }
 ```
 
 #### Step 2: Create a decompressor

@@ -2,6 +2,16 @@
 
 Rust bindings for the GDeflate compression library. GDeflate is a GPU-optimized compression format that closely matches the DEFLATE format, designed for high-performance compression and decompression.
 
+## Prerequisites
+
+**Important:** This crate requires the DirectStorage repository submodules to be initialized:
+
+```bash
+git submodule update --init --recursive
+```
+
+If you see build errors about missing files, make sure the submodules are properly initialized.
+
 ## Features
 
 - Safe Rust API wrapping the C interface
@@ -16,7 +26,10 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
+# Local path:
 gdeflate = { path = "../GDeflate/rust" }
+# Or git dependency:
+# gdeflate = { git = "https://github.com/Donovoi/DirectStorage", subdir = "GDeflate/rust" }
 ```
 
 ### Example

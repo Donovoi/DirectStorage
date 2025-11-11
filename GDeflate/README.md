@@ -17,7 +17,10 @@ GDeflate can be integrated into your applications as a library for high-performa
 
 ```toml
 [dependencies]
-gdeflate = { path = "path/to/DirectStorage/GDeflate/rust" }
+# Local path (adjust to your directory structure):
+gdeflate = { path = "../path/to/DirectStorage/GDeflate/rust" }
+# Or use git dependency:
+# gdeflate = { git = "https://github.com/Donovoi/DirectStorage", subdir = "GDeflate/rust" }
 ```
 
 ```rust
