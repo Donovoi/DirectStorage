@@ -34,6 +34,21 @@ The Samples directory contains sample code that demonstrates how to use the Dire
 ## GDeflate Reference Implementation
 This directory contains codec source and sample code that demonstrates how to use [GDeflate](GDeflate/README.md).
 
+**GDeflate can now be used as a standalone library** in your applications for high-performance compression:
+
+- **C/C++ API**: Link against the library using CMake or pkg-config
+- **Rust FFI Bindings**: Safe Rust wrapper with comprehensive tests
+- **Search Tool Integration**: Ideal for tools like ripgrep that need fast decompression
+
+See the [GDeflate Library Usage Guide](GDeflate/LIBRARY_USAGE.md) and [Search Tool Integration Guide](GDeflate/SEARCH_TOOL_INTEGRATION.md) for details.
+
+### Quick Example (Rust)
+```rust
+use gdeflate::{compress, decompress};
+let compressed = compress(b"Hello, world!", 6, 0)?;
+let decompressed = decompress(&compressed, 13, 0)?;
+```
+
 The repo uses submodules, so be sure to pass `--recurse-submodules` to the `git clone` command.
 
 If you forget to do this then you can run `git submodule update --init`
