@@ -77,8 +77,12 @@ endif (WIN32)
 
 include_directories(${LIBDEFLATE_DIR})
 add_library(libdeflate_static STATIC ${SOURCES} ${HEADERS} ${PUBLIC_HEADERS})
-target_include_directories(libdeflate_static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set_property(TARGET libdeflate_static PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_include_directories(libdeflate_static PUBLIC 
+  $<BUILD_INTERFACE:${LIBDEFLATE_DIR}>
+  $<INSTALL_INTERFACE:include/gdeflate>
+)
 
 set_target_properties(libdeflate_static PROPERTIES
   OUTPUT_NAME deflate
-  PUBLIC_HEADER libdeflate.h)
+  PUBLIC_HEADER "${LIBDEFLATE_DIR}/libdeflate.h")
